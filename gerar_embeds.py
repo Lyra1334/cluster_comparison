@@ -43,17 +43,19 @@ def is_cluster(path):
     else:
         return False
 
-def recursive_generate(path, executavel, modelo, destino):
+def recursive_generate(root : str, path : str, executavel : str, modelo : str, destino : str):
     #Recursivamente procura os clusters finais/"de ponta"
     itens = os.listdir(path)
     for item in itens:
         if is_cluster(os.path.join(path,item)):
-            os.system(f'python3 "{executavel}" --model_path "{modelo}" --device "cuda" --dataset_path "{os.path.join(path,item)}" --output_path "{destino}"')
+            nome_doc_embed = path.replace(root+"/", "").replace("/","-") + "-" + item
+            os.system(f'python3 "{executavel}" --model_path "{modelo}" --device "cuda" --dataset_path "{os.path.join(path,item)}" --output_file "{destino}"')
         else:
-            recursive_generate(os.path.join(path,item),executavel,modelo,destino)
+            recursive_generate(root, os.path.join(path,item),executavel,modelo,destino)
 
 def main(args):
     recursive_generate(args.root_folder,
+                       args.root_folder,
                        args.calculate_distances_path,
                        args.model_path,
                        args.csv_dest)

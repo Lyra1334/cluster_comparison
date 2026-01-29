@@ -60,7 +60,7 @@ def main(args):
         cont +=1
 
         caminho_csv = os.path.join(path_uso,csv)
-        nome_csv = csv[:-4]
+        nome_csv = csv[:-4].replace("-","/")
         centro = centroideCsv(caminho_csv)
         if centro != False:
             centroides.append((nome_csv,centro))
@@ -91,7 +91,7 @@ def main(args):
 
     with open(os.path.join(path_output,"output.csv"),"w") as saida:
         for linha in comparacoes:
-            saida.write(f"{linha[0]} e {linha[1]}, distância {linha[2]}\n")
+            saida.write(f"{linha[0]}, {linha[1]}, {linha[2]}\n")
 
     print("Acabou")
 
