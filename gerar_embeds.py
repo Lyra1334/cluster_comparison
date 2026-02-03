@@ -49,7 +49,7 @@ def recursive_generate(root : str, path : str, executavel : str, modelo : str, d
     for item in itens:
         if is_cluster(os.path.join(path,item)):
             nome_doc_embed = path.replace(root+"/", "").replace("/","-") + "-" + item
-            os.system(f'python3 "{executavel}" --model_path "{modelo}" --device "cuda" --dataset_path "{os.path.join(path,item)}" --output_file "{destino}"')
+            os.system(f'python3 "{executavel}" --model_path "{modelo}" --device "cuda" --dataset_path "{os.path.join(path,item)}" --output_file "{os.path.join(destino,nome_doc_embed)}"')
         else:
             recursive_generate(root, os.path.join(path,item),executavel,modelo,destino)
 
