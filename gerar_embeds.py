@@ -50,7 +50,7 @@ def recursive_generate(root : str, path : str, executavel : str, modelo : str, d
     directories = [item for item in os.listdir(path) if not os.path.isfile(os.path.join(path,item))]
     for item in directories:
         if is_cluster(os.path.join(path,item)):
-            nome_doc_embed = path.replace(root+"/", "").replace("/","_-") + "_-" + item
+            nome_doc_embed = path.replace(root+"/", "").replace("/","_-") + "_-" + item + ".csv"
             os.system(f'python3 "{executavel}" --model_path "{modelo}" --device "cuda" --dataset_path "{os.path.join(path,item)}" --output_file "{os.path.join(destino,nome_doc_embed)}"')
         elif os.path.isdir(os.path.join(path,item)):
             recursive_generate(root, os.path.join(path,item),executavel,modelo,destino)
