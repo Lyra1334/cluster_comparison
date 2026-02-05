@@ -37,20 +37,22 @@ def parse_args(argv):
 
 def is_cluster(path):
     #Checa se uma pasta é um cluster final ou não
+    if os.path.isfile(path):
+        return False
     itens = os.listdir(path)
-    if os.path.isfile(os.path.join(path,itens[0])):
+    if itens == [item for item in itens if os.path.isfile(os.path.join(path,item))]:
         return True
     else:
         return False
 
 def recursive_generate(root : str, path : str, executavel : str, modelo : str, destino : str):
     #Recursivamente procura os clusters finais/"de ponta"
-    itens = os.listdir(path)
-    for item in itens:
+    directories = [item for item in os.listdir(path) if not os.path.isfile(os.path.join(path,item))]
+    for item in directories:
         if is_cluster(os.path.join(path,item)):
-            nome_doc_embed = path.replace(root+"/", "").replace("/","-") + "-" + item
+            nome_doc_embed = path.replace(root+"/", "").replace("/","_-") + "_-" + item
             os.system(f'python3 "{executavel}" --model_path "{modelo}" --device "cuda" --dataset_path "{os.path.join(path,item)}" --output_file "{os.path.join(destino,nome_doc_embed)}"')
-        else:
+        elif os.path.isdir(os.path.join(path,item)):
             recursive_generate(root, os.path.join(path,item),executavel,modelo,destino)
 
 def main(args):

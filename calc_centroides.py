@@ -60,7 +60,7 @@ def main(args):
         cont +=1
 
         caminho_csv = os.path.join(path_uso,csv)
-        nome_csv = csv[:-4].replace("-","/")
+        nome_csv = csv[:-4].replace("_-","/")
         centro = centroideCsv(caminho_csv)
         if centro != False:
             centroides.append((nome_csv,centro))
