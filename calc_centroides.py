@@ -26,25 +26,9 @@ def centroideCsv(caminho : str):
         print(f"Vazio em {caminho}")
         return False
     
-def bin_insert(list_to_insert: list, num:float, start:int, end:int):
-    if len(list_to_insert) == 0:
-        return 0
-    mid = start + ((end-start)//2)
-    if list_to_insert[mid] == num:
-        return mid
-    elif start == end:
-        return start
-    elif start+1 == end:
-        if list_to_insert[end] < num:
-            return end
-        elif list_to_insert[start] > num:
-            return start
-        elif list_to_insert[start] < num < list_to_insert[end]:
-            return start
-    elif num < list_to_insert[mid]:
-        return bin_insert(list_to_insert,num,start,mid)
-    elif list_to_insert[mid] < num:
-        return bin_insert(list_to_insert,num,mid,end)
+def sort_comparisons(list_to_sort: list):
+    sorted_dists = [item[2] for item in list_to_sort].sorted()
+    
 
 def parse_args(argv):
     parser = argparse_flags.ArgumentParser(
@@ -92,21 +76,11 @@ def main(args):
             if i < j:
 
                 dist = sqrt(sum([(centroides[i][1][x]-centroides[j][1][x])**2 for x in range(64)]))
-                pos_insert = 0
-                
-                if len(comparacoes) == 0:
-                    comparacoes.append([centroides[i][0],centroides[j][0],dist])
-                    dists.append(dist)
-                else:
-                    pos_insert = bin_insert(dists,
-                                            dist,
-                                            0,
-                                            len(comparacoes)-1)
-                    comparacoes.insert(pos_insert,
-                                       [centroides[i][0],
-                                        centroides[j][0],
-                                        dist])
-                    dists.insert(pos_insert,dist)
+                comparacoes.append([centroides[i][0],centroides[j][0],dist])
+    
+    print("Organizando")
+
+    comparacoes.sort(key= lambda a : a[2])
 
     print(f"Escrevendo {len(comparacoes)} linhas")
 
