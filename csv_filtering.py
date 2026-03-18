@@ -11,16 +11,26 @@ def parse_args(argv):
         "--csv_file",
         type=str,
         help="Input file to be edited.",
-        default="/home/mari/pibic/scripts/embeds"
+        default="/home/mari/pibic/comp_centroides/output.csv"
     )
     parser.add_argument(
         "--output_file",
         type=str,
         help="File to write output.",
-        default="/home/mari/pibic/scripts/embeds"
+        default="/home/mari/pibic/comp_centroides/filtrado.csv"
     )
     args = parser.parse_args(argv[1:])
     return args
+
+def AreListsEqual(list1, list2):
+    #Outputs True if lists are equal, False otherwise.
+    if len(list1) != len(list2):
+        return False
+    for i in range(len(list1)):
+        if list1[i] != list2[i]:
+            return False
+    
+    return True
 
 def main(args):
     input = open(args.csv_file,"r")
@@ -29,8 +39,8 @@ def main(args):
     linha = input.readline().strip()
     while linha != "":
         itens = linha.split(",")
-        primeiro, segundo = itens[0].split("/"), itens[1].split("/")
-        if primeiro[:-1] != segundo[:-1]:
+        primeiro, segundo = list(map(lambda a: a.strip(), itens[0].split("/"))), list(map(lambda a: a.strip(),itens[1].split("/")))
+        if not AreListsEqual(primeiro[:-1],segundo[:-1]):
             output.write(linha+"\n")
         linha = input.readline().strip()
 
