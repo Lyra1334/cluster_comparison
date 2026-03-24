@@ -64,7 +64,7 @@ def TestFilters(filters, first_cluster, second_cluster, distance):
 def main(args):
     input = open(args.csv_file,"r")
     output_list = []
-    filters = [HierarchyFilter]
+    filters = [DistanceFilter, HierarchyFilter, BlankFilter]
 
     linha = input.readline().strip()
     while linha != "":
