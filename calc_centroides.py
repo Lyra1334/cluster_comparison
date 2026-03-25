@@ -86,7 +86,7 @@ def main(args):
 
     with open(os.path.join(path_output,"output.csv"),"w") as saida:
         for linha in comparacoes:
-            saida.write(f"{linha[0]}, {linha[1]}, {linha[2]}\n")
+            saida.write(f"{linha[0]},{linha[1]},{linha[2]}\n")
 
     print("Acabou")
 
