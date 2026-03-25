@@ -4,7 +4,7 @@ from absl import app
 from absl.flags import argparse_flags
 from shutil import copytree
 from os import mkdir
-from os.path import join
+from os.path import join, isdir
 
 def parse_args(argv):
     parser = argparse_flags.ArgumentParser(
@@ -41,14 +41,14 @@ def main(args):
     
     with open(args.csv_file, "r") as csv:
         for line in range(args.lines):
-            mkdir(join(args.ouput_folder,str(line+1)))
+            #mkdir(join(args.output_folder,str(line+1)))
             text = csv.readline().strip()
             if text == "":
                 print(f"Csv acabou após {line+1} linhas.")
                 return
             paths = csv.readline().strip().split(",")
-            copytree(join(args.data_folder,paths[0]),join(args.output_folder,str(line+1)))
-            copytree(join(args.data_folder,paths[1]),join(args.output_folder,str(line+1)))
+            copytree(join(args.data_folder,paths[0]),join(args.output_folder,str(line+1),paths[0].split("/")[-1]))
+            copytree(join(args.data_folder,paths[1]),join(args.output_folder,str(line+1),paths[1].split("/")[-1]))
     print(f"Processo acabou após {args.lines} linhas.")
     return
 
