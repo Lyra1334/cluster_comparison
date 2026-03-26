@@ -41,14 +41,14 @@ def main(args):
     
     with open(args.csv_file, "r") as csv:
         for line in range(args.lines):
-            #mkdir(join(args.output_folder,str(line+1)))
             text = csv.readline().strip()
             if text == "":
                 print(f"Csv acabou após {line+1} linhas.")
                 return
-            paths = csv.readline().strip().split(",")
-            copytree(join(args.data_folder,paths[0]),join(args.output_folder,str(line+1),paths[0].split("/")[-1]))
-            copytree(join(args.data_folder,paths[1]),join(args.output_folder,str(line+1),paths[1].split("/")[-1]))
+            paths = text.split(",")
+            nome_cluster1, nome_cluster2 = paths[0].split("/")[-2] +"-"+ paths[0].split("/")[-1],  paths[1].split("/")[-2] +"-"+ paths[1].split("/")[-1]
+            copytree(join(args.data_folder,paths[0]),join(args.output_folder,str(line+1),nome_cluster1))
+            copytree(join(args.data_folder,paths[1]),join(args.output_folder,str(line+1),nome_cluster2))
     print(f"Processo acabou após {args.lines} linhas.")
     return
 
