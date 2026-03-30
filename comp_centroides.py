@@ -16,46 +16,32 @@ def parse_args(argv):
         default="/home/mari/pibic/scripts/embeds"
     )
     parser.add_argument(
-        "--centroid1_csv",
+        "--centroid_csv",
         type=str,
-        help="File to read group 1 cluster centroids from.",
-        default="/home/mari/pibic/comp_centroides"
-    )
-    parser.add_argument(
-        "--centroid2_csv",
-        type=str,
-        help="File to read group 2 cluster centroids from.",
+        help="File to read cluster centroids from.",
         default="/home/mari/pibic/comp_centroides"
     )
     args = parser.parse_args(argv[1:])
     return args
 
 def main(args):
-    centroides1 = list()
-    centroides2 = list()
+    centroides = list()
     comparacoes = list()
 
-    with open(args.centroid1_csv, "r") as input:
+    with open(args.centroid_csv, "r") as input:
         texto = input.readline().strip()
         while texto != "": 
             linha = texto.split(",")
-            centroides1.append((linha[0],linha[1:]))
+            centroides.append((linha[0],linha[1:]))
             texto = input.readline().strip()
     
-    with open(args.centroid2_csv, "r") as input:
-        texto = input.readline().strip()
-        while texto != "": 
-            linha = texto.split(",")
-            centroides2.append((linha[0],linha[1:]))
-            texto = input.readline().strip()
-    
-    for i in range(len(centroides1)):
-        print(f"Comparações {i} de {len(centroides1)}")
-        for j in range(len(centroides2)):
+    for i in range(len(centroides)):
+        print(f"Comparações {i} de {len(centroides)}")
+        for j in range(len(centroides)):
             if i < j:
 
-                dist = sqrt(sum([(centroides1[i][1][x]-centroides2[j][1][x])**2 for x in range(64)]))
-                comparacoes.append([centroides1[i][0],centroides2[j][0],dist])
+                dist = sqrt(sum([(centroides[i][1][x]-centroides[j][1][x])**2 for x in range(64)]))
+                comparacoes.append([centroides[i][0],centroides[j][0],dist])
     
     print("Organizando")
 
