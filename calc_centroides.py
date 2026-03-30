@@ -26,9 +26,6 @@ def centroideCsv(caminho : str):
         print(f"Vazio em {caminho}")
         return False
     
-def sort_comparisons(list_to_sort: list):
-    sorted_dists = [item[2] for item in list_to_sort].sorted()
-    
 
 def parse_args(argv):
     parser = argparse_flags.ArgumentParser(
@@ -41,9 +38,9 @@ def parse_args(argv):
         default="/home/mari/pibic/scripts/embeds"
     )
     parser.add_argument(
-        "--comparison_dest",
+        "--centroid_csv_dest",
         type=str,
-        help="Folder to output the cluster comparisons.",
+        help="File to output the cluster comparisons.",
         default="/home/mari/pibic/comp_centroides"
     )
     args = parser.parse_args(argv[1:])
@@ -52,12 +49,10 @@ def parse_args(argv):
 def main(args):
 
     path_uso = args.embeds_folder
-    path_output = args.comparison_dest
+    path_output = args.centroid_csv_dest
     docs = [cluster for cluster in os.listdir(path_uso) if cluster[-4:] == ".csv"]
     cont = 0
     centroides = list()
-    comparacoes = list()
-    dists = list()
 
 
     for csv in docs:
@@ -70,23 +65,12 @@ def main(args):
         if centro != False:
             centroides.append((nome_csv,centro))
 
-    for i in range(len(centroides)):
-        print(f"Comparações {i} de {len(centroides)}")
-        for j in range(len(centroides)):
-            if i < j:
-
-                dist = sqrt(sum([(centroides[i][1][x]-centroides[j][1][x])**2 for x in range(64)]))
-                comparacoes.append([centroides[i][0],centroides[j][0],dist])
     
-    print("Organizando")
+    print(f"Escrevendo {len(centroides)} linhas")
 
-    comparacoes.sort(key= lambda a : a[2])
-
-    print(f"Escrevendo {len(comparacoes)} linhas")
-
-    with open(os.path.join(path_output,"output.csv"),"w") as saida:
-        for linha in comparacoes:
-            saida.write(f"{linha[0]},{linha[1]},{linha[2]}\n")
+    with open(path_output,"w") as saida:
+        for linha in centroides:
+            saida.write(f"{linha[0]},{linha[1]}\n")
 
     print("Acabou")
 
