@@ -25,7 +25,12 @@ def centroideCsv(caminho : str):
     else:
         print(f"Vazio em {caminho}")
         return False
-    
+
+def VecToString(lista: list):
+    string = "" 
+    for x in lista:
+        string += f",{x}"
+    return string[1:]
 
 def parse_args(argv):
     parser = argparse_flags.ArgumentParser(
@@ -70,7 +75,7 @@ def main(args):
 
     with open(path_output,"w") as saida:
         for linha in centroides:
-            saida.write(f"{linha[0]},{linha[1]}\n")
+            saida.write(f"{linha[0]},{VecToString(linha[1])}\n")
 
     print("Acabou")
 
