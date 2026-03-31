@@ -32,7 +32,7 @@ def main(args):
         texto = input.readline().strip()
         while texto != "": 
             linha = texto.split(",")
-            centroides.append((linha[0],linha[1:]))
+            centroides.append((linha[0],list(map(int,linha[1:]))))
             texto = input.readline().strip()
     
     for i in range(len(centroides)):
