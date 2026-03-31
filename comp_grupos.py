@@ -39,14 +39,14 @@ def main(args):
         texto = input.readline().strip()
         while texto != "": 
             linha = texto.split(",")
-            centroides1.append((linha[0],list(map(int,linha[1:]))))
+            centroides1.append((linha[0],list(map(float,linha[1:]))))
             texto = input.readline().strip()
     
     with open(args.centroid2_csv, "r") as input:
         texto = input.readline().strip()
         while texto != "": 
             linha = texto.split(",")
-            centroides2.append((linha[0],list(map(int,linha[1:]))))
+            centroides2.append((linha[0],list(map(float,linha[1:]))))
             texto = input.readline().strip()
     
     for i in range(len(centroides1)):
