@@ -63,7 +63,7 @@ def main(args):
 
     with open(args.output_file, "w") as output:
         for linha in comparacoes:
-            output.write(f"{linha[0],linha[1],linha[2]}")
+            output.write(f"{linha[0]},{linha[1]},{linha[2]}\n")
 
 if __name__ == "__main__":
     app.run(main,flags_parser=parse_args)

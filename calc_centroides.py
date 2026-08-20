@@ -45,7 +45,7 @@ def parse_args(argv):
     parser.add_argument(
         "--centroid_csv_dest",
         type=str,
-        help="File to output the cluster comparisons.",
+        help="File to output the cluster centroid csvs.",
         default="/home/mari/pibic/comp_centroides"
     )
     args = parser.parse_args(argv[1:])

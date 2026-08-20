@@ -1,4 +1,4 @@
-Scripts to be used with ABMHub's doc-zsl to analize how similar two clusters are.
+Scripts to be used with ABMHub's doc-zsl to analize cluster similarities.
 
 How to use:
 <ul>
